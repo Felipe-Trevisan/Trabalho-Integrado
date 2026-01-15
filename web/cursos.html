@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema NAPNE - Gestão de Cursos</title>
+    <link rel="stylesheet" href="css/alunos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Sistema NAPNE</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="peis.html">PEIs</a></li>
+                        <li><a href="alunos.html">Estudantes</a></li>
+                        <li><a href="professores.html">Servidores</a></li>
+                        <li><a href="cursos.html" class="active">Cursos</a></li>
+                        <li><a href="necessidades.html">Necessidades</a></li>
+                        <li><a href="alterar-senha.html">Alterar Senha</a></li>
+                        <li><a href="#" id="logout">Sair</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>Gestão de Cursos e Matérias</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-primary" id="newCourseBtn">
+                        <i class="fas fa-plus"></i> Novo Curso
+                    </button>
+                    <button class="btn btn-secondary" id="newSubjectBtn">
+                        <i class="fas fa-plus"></i> Nova Matéria
+                    </button>
+                </div>
+            </div>
+
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchCourse" placeholder="Buscar por código, nome do curso, nível ou coordenador..." autocomplete="off">
+                    <button class="btn btn-outline" id="clearSearchCourse" style="display: none;">
+                        <i class="fas fa-times"></i> Limpar
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="courses">Cursos</button>
+                    <button class="tab-btn" data-tab="subjects">Matérias</button>
+                </div>
+
+                <div class="tab-content active" id="courses-content">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nome do Curso</th>
+                                    <th>Nível</th>
+                                    <th>Qtd. Matérias</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="courses-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="subjects-content">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome da Matéria</th>
+                                    <th>Carga Horária</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="subjects-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="courseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="courseModalTitle">Novo Curso</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="courseForm">
+                    <input type="hidden" id="courseId">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="courseCode">Código Único *</label>
+                            <input type="text" id="courseCode" placeholder="Ex: TEC-INFO-001" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseLevel">Nível *</label>
+                            <select id="courseLevel" required>
+                                <option value="">Selecione o nível</option>
+                                <option value="Superior">Superior</option>
+                                <option value="Técnico">Técnico</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="courseName">Nome do Curso *</label>
+                        <input type="text" id="courseName" placeholder="Ex: Técnico em Informática" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="courseCoordinatorCpf">CPF do Coordenador (opcional)</label>
+                            <input type="text" id="courseCoordinatorCpf" placeholder="000.000.000-00" maxlength="14">
+                            <small style="color: #666; font-size: 0.9em;">Opcional. Se informado, o servidor deve estar cadastrado no sistema.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseWorkload">Carga Horária (horas) *</label>
+                            <input type="number" id="courseWorkload" placeholder="Ex: 1200" min="1" required>
+                        </div>
+                    </div>
+                    
+                        <div class="form-group">
+                            <label for="courseDuration">Duração *</label>
+                        <input type="text" id="courseDuration" placeholder="Ex: 3 anos, 4 semestres, 1800 horas" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="courseDescription">Ementa Geral</label>
+                        <textarea id="courseDescription" rows="4" placeholder="Descrição geral do curso, objetivos e competências..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelCourse">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Curso</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="subjectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="subjectModalTitle">Nova Matéria</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="subjectForm">
+                    <input type="hidden" id="subjectId">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="subjectName">Nome da Matéria *</label>
+                            <input type="text" id="subjectName" placeholder="Ex: Matemática Aplicada" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subjectWorkload">Carga Horária (horas) *</label>
+                            <input type="number" id="subjectWorkload" placeholder="Ex: 60" min="1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subjectEmenta">Ementa</label>
+                        <textarea id="subjectEmenta" rows="5" placeholder="Descreva o conteúdo programático, objetivos e competências da matéria..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelSubject">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Matéria</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="courseDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="courseDetailsTitle">Detalhes do Curso</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="course-details">
+                    <div class="detail-section">
+                        <h3>Informações Básicas</h3>
+                        <div class="detail-row">
+                            <strong>Código:</strong> <span id="detail-course-code"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Nome:</strong> <span id="detail-course-name"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Nível:</strong> <span id="detail-course-level"></span>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Ementa Geral</h3>
+                        <p id="detail-course-description"></p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Matérias do Curso</h3>
+                        <div id="course-subjects-list">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Sistema NAPNE &copy; 2025 - Desenvolvido para inclusão educacional</p>
+        </div>
+    </footer>
+
+    <script src="js/api-config.js"></script>
+    <script src="js/cursos.js"></script>
+</body>
+</html>

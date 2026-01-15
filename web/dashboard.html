@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema NAPNE - Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Sistema NAPNE</span>
+                </div>
+                <div class="user-info">
+                    <span id="user-welcome"></span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                        <li><a href="peis.html">PEIs</a></li>
+                        <li><a href="alunos.html">Estudantes</a></li>
+                        <li><a href="professores.html">Servidores</a></li>
+                        <li><a href="cursos.html">Cursos</a></li>
+                        <li><a href="necessidades.html">Necessidades</a></li>
+                        <li><a href="alterar-senha.html">Alterar Senha</a></li>
+                        <li><a href="#" id="logout">Sair</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="welcome-section">
+                <h1>Bem-vindo ao Sistema NAPNE</h1>
+                <p>Gerencie estudantes, professores, cursos e Planos Educacionais Individualizados</p>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Estudantes Cadastrados</h3>
+                        <span id="total-students">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>PEIs Ativos</h3>
+                        <span id="total-peis">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Servidores</h3>
+                        <span id="total-teachers">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Cursos</h3>
+                        <span id="total-courses">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <h2>Ações Rápidas</h2>
+                <div class="action-buttons">
+                    <a href="peis.html?action=new" class="action-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Novo PEI</span>
+                    </a>
+                    <a href="alunos.html" class="action-btn">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Gerenciar Estudantes</span>
+                    </a>
+                    <a href="professores.html" class="action-btn">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Gerenciar Servidores</span>
+                    </a>
+                    <a href="cursos.html" class="action-btn">
+                        <i class="fas fa-book"></i>
+                        <span>Gerenciar Cursos</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="recent-section">
+                <h2>PEIs Recentes</h2>
+                <div class="recent-list" id="recent-peis">
+                    <p class="empty-message">Nenhum PEI cadastrado ainda.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Sistema NAPNE &copy; 2025 - Desenvolvido para inclusão educacional</p>
+        </div>
+    </footer>
+
+    <script src="js/api-config.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema NAPNE - Área do Professor</title>
+    <link rel="stylesheet" href="css/professor.css">
+    <link rel="stylesheet" href="css/peis.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Sistema NAPNE - Professor</span>
+                </div>
+                <div class="user-info">
+                    <span id="user-welcome"></span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="professor.html" class="active">PEIs</a></li>
+                        <li><a href="pareceres.html">Pareceres</a></li>
+                        <li><a href="alterar-senha.html">Alterar Senha</a></li>
+                        <li><a href="#" id="logout">Sair</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>Planos Educacional Individualizado (PEIs)</h1>
+            </div>
+
+            <div class="content-section">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="pending">PEIs Pendentes</button>
+                    <button class="tab-btn" data-tab="responded">PEIs Respondidos</button>
+                </div>
+
+                <div class="tab-content active" id="pending-content">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome do Estudante</th>
+                                    <th>Curso</th>
+                                    <th>Componente Curricular</th>
+                                    <th>Ano/Semestre</th>
+                                    <th>Necessidade Específica</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pending-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="responded-content">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome do Estudante</th>
+                                    <th>Curso</th>
+                                    <th>Componente Curricular</th>
+                                    <th>Ano/Semestre</th>
+                                    <th>Necessidade Específica</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="responded-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="peiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalhes do PEI</h2>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <button type="button" class="btn btn-success" id="generatePdf" style="display: none;">Gerar PDF</button>
+                <span class="close">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="peiViewContainer" class="pei-view-container" style="display: none;"></div>
+                <div class="pei-details" id="peiDetails" style="display: none;">
+                    <div class="detail-section">
+                        <h3>Informações Básicas</h3>
+                        <div class="detail-row">
+                            <strong>Estudante:</strong> <span id="detail-student"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Curso:</strong> <span id="detail-course"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Componente Curricular:</strong> <span id="detail-subject"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Ano/Semestre:</strong> <span id="detail-yearSemester"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Necessidade Específica:</strong> <span id="detail-need"></span>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Ementa</h3>
+                        <p id="detail-ementa"></p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Objetivos</h3>
+                        <div class="detail-row">
+                            <strong>Objetivo Geral:</strong>
+                            <p id="detail-generalObjective"></p>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Objetivos Específicos:</strong>
+                            <p id="detail-specificObjectives"></p>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Conteúdos</h3>
+                        <p id="detail-contents"></p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Metodologia</h3>
+                        <p id="detail-methodology"></p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Avaliação</h3>
+                        <p id="detail-evaluation"></p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Parecer do Professor</h3>
+                        <p id="detail-opinion"></p>
+                    </div>
+
+                    <div class="detail-section" id="napne-comments-section">
+                        <h3>Comentários do NAPNE</h3>
+                        <div id="detail-napne-comments" style="padding: 10px; background-color: #f5f5f5; border-radius: 4px; min-height: 60px; white-space: pre-wrap;">
+                            Nenhum comentário do NAPNE ainda.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="responseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="responseModalTitle">Responder ao PEI</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="responseForm">
+                    <input type="hidden" id="responsePeiId">
+                    
+                    <div class="detail-section">
+                        <h3>Informações do PEI</h3>
+                        <div class="detail-row">
+                            <strong>Estudante:</strong> <span id="response-student"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Curso:</strong> <span id="response-course"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Componente Curricular:</strong> <span id="response-subject"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="response-subject-select">Componente Curricular *</label>
+                        <select id="response-subject-select" required>
+                            <option value="">Selecione a matéria</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ementa-response">Ementa</label>
+                        <textarea id="ementa-response" rows="3" readonly placeholder="Será preenchida automaticamente"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specificObjectives">Objetivos Específicos *</label>
+                        <textarea id="specificObjectives" rows="4" required placeholder="Objetivos específicos da adaptação"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="methodology">Metodologia *</label>
+                        <textarea id="methodology" rows="4" required placeholder="Metodologia que o professor vai usar"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="evaluation">Avaliação *</label>
+                        <textarea id="evaluation" rows="4" required placeholder="Avaliação proposta pelo professor"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="parecer">Parecer do Professor *</label>
+                        <textarea id="parecer" rows="4" required placeholder="Parecer do professor sobre a adaptação"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-danger" id="cancelResponse">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Salvar Resposta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Sistema NAPNE &copy; 2025 - Área do Professor</p>
+        </div>
+    </footer>
+
+    <script src="js/api-config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="js/professor.js"></script>
+</body>
+</html>

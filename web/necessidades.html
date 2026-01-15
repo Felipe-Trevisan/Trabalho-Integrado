@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema NAPNE - Necessidades Especiais</title>
+    <link rel="stylesheet" href="css/modern-base.css">
+    <link rel="stylesheet" href="css/alunos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Sistema NAPNE</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="peis.html">PEIs</a></li>
+                        <li><a href="alunos.html">Estudantes</a></li>
+                        <li><a href="professores.html">Servidores</a></li>
+                        <li><a href="cursos.html">Cursos</a></li>
+                        <li><a href="necessidades.html" class="active">Necessidades</a></li>
+                        <li><a href="alterar-senha.html">Alterar Senha</a></li>
+                        <li><a href="#" id="logout">Sair</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>Gestão de Necessidades Especiais</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-primary" id="newNeedBtn">
+                        <i class="fas fa-plus"></i> Nova Necessidade
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="needs-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="needModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="needModalTitle">Nova Necessidade Especial</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="needForm">
+                    <input type="hidden" id="needId">
+                    
+                    <div class="form-group">
+                        <label for="needName">Nome da Necessidade *</label>
+                        <input type="text" id="needName" placeholder="Ex: Deficiência Visual - Cegueira" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="needDescription">Descrição</label>
+                        <textarea id="needDescription" rows="4" placeholder="Descreva detalhadamente a necessidade específica..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelNeed">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Necessidade</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <footer>
+        <div class="container">
+            <p>Sistema NAPNE &copy; 2025 - Desenvolvido para inclusão educacional</p>
+        </div>
+    </footer>
+
+    <script src="js/api-config.js"></script>
+    <script src="js/necessidades.js"></script>
+</body>
+</html>
+

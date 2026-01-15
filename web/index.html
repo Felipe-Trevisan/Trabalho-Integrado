@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema NAPNE - Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-in">
+            <form id="loginForm">
+                <h1>Login - Sistema NAPNE</h1>
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>NAPNE</span>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="login-username" placeholder="Usuário" required>
+                    <span class="error-message" id="login-user-error"></span>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="login-password" placeholder="Senha" required>
+                    <span class="error-message" id="login-pass-error"></span>
+                    <button type="button" id="toggleLoginPassword" class="toggle-password">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+                <button type="submit" class="submit-btn">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="js/api-config.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

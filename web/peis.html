@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema NAPNE - Gestão de PEIs</title>
+    <link rel="stylesheet" href="css/peis.css">
+    <link rel="stylesheet" href="css/alunos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Sistema NAPNE</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="peis.html" class="active">PEIs</a></li>
+                        <li><a href="alunos.html">Estudantes</a></li>
+                        <li><a href="professores.html">Servidores</a></li>
+                        <li><a href="cursos.html">Cursos</a></li>
+                        <li><a href="necessidades.html">Necessidades</a></li>
+                        <li><a href="alterar-senha.html">Alterar Senha</a></li>
+                        <li><a href="#" id="logout">Sair</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>Gestão de Planos Educacional Individualizado (PEI)</h1>
+                <button class="btn btn-primary" id="newPeiBtn">
+                    <i class="fas fa-plus"></i> Novo PEI
+                </button>
+            </div>
+
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchPei" placeholder="Buscar por estudante, curso, matéria, professor ou período..." autocomplete="off">
+                    <button class="btn btn-outline" id="clearSearchPei" style="display: none;">
+                        <i class="fas fa-times"></i> Limpar
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="content-section">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="geral">PEI Geral (Criados pelo NAPNE)</button>
+                    <button class="tab-btn" data-tab="adaptacao">PEI Adaptação (Criados pelos Professores)</button>
+                </div>
+
+                <div class="tab-content active" id="geral-content">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome do Estudante</th>
+                                    <th>Curso</th>
+                                    <th>Componente Curricular</th>
+                                    <th>Ano/Semestre</th>
+                                    <th>Necessidade Específica</th>
+                                    <th>Professor Responsável</th>
+                                    <th>Status</th>
+                                    <th>Última Atualização</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pei-geral-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="adaptacao-content">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome do Estudante</th>
+                                    <th>Curso</th>
+                                    <th>Componente Curricular</th>
+                                    <th>Professor</th>
+                                    <th>Ano/Semestre</th>
+                                    <th>Status</th>
+                                    <th>Data Envio</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pei-adaptacao-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="peiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Novo PEI - Adaptação Curricular</h2>
+                <div class="modal-header-actions" style="display: flex; align-items: center; gap: 10px;">
+                    <button type="button" class="btn btn-success" id="generatePdf" style="display: none;">Gerar PDF</button>
+                    <span class="close">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="peiViewContainer" class="pei-view-container" style="display: none;"></div>
+                <form id="peiForm">
+                    <input type="hidden" id="peiId">
+                    <input type="hidden" id="peiType" value="adaptacao">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentName">Nome do Estudante *</label>
+                            <select id="studentName" name="studentName" required>
+                                <option value="">Selecione o estudante</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentCourse">Curso *</label>
+                            <select id="studentCourse" name="studentCourse" required readonly>
+                                <option value="">Selecione o curso</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group" id="subject-group" style="display: none;">
+                            <label for="subject">Componente Curricular *</label>
+                            <select id="subject" name="subject">
+                                <option value="">Selecione a matéria</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="teacher-group" style="display: none;">
+                            <label for="teacher">Docente *</label>
+                            <select id="teacher" name="teacher">
+                                <option value="">Selecione o docente</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="yearSemester">Ano/Semestre *</label>
+                            <input type="text" id="yearSemester" name="yearSemester" placeholder="Ex: 2023/1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="specificNeed">Necessidade Específica</label>
+                            <select id="specificNeed" name="specificNeed" readonly>
+                                <option value="">Carregando...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="professor-select-group">
+                        <label for="professorSelect">Professor Responsável *</label>
+                        <select id="professorSelect" name="professorSelect" required>
+                            <option value="">Selecione o professor</option>
+                            <!-- Opções serão preenchidas via JavaScript -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="ementa-group" style="display: none;">
+                        <label for="ementa">Ementa</label>
+                        <textarea id="ementa" name="ementa" rows="3" readonly placeholder="A ementa será preenchida automaticamente ao selecionar a matéria"></textarea>
+                    </div>
+                    
+                    <hr style="margin: 20px 0; border: 1px solid #ddd;">
+                    <h3 style="margin-bottom: 15px; color: #333;">PEI Geral (Criado pelo NAPNE)</h3>
+                    
+                    <div class="form-group">
+                        <label for="generalObjective">Objetivo Geral *</label>
+                        <textarea id="generalObjective" name="generalObjective" rows="3" required placeholder="Objetivo geral do PEI criado pelo NAPNE"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contents">Conteúdos *</label>
+                        <textarea id="contents" name="contents" rows="3" required placeholder="Conteúdos do PEI criado pelo NAPNE"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="napneOpinion">Parecer do NAPNE *</label>
+                        <textarea id="napneOpinion" name="napneOpinion" rows="3" required placeholder="Parecer do NAPNE sobre o aluno"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dificuldades">Dificuldades</label>
+                        <textarea id="dificuldades" name="dificuldades" rows="2" placeholder="Dificuldades identificadas no aluno"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="interessesHabilidades">Interesses e Habilidades</label>
+                        <textarea id="interessesHabilidades" name="interessesHabilidades" rows="2" placeholder="Interesses e habilidades do aluno"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="estrategias">Estratégias</label>
+                        <textarea id="estrategias" name="estrategias" rows="2" placeholder="Estratégias pedagógicas recomendadas"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="observacoes">Observações</label>
+                        <textarea id="observacoes" name="observacoes" rows="2" placeholder="Observações adicionais"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="precisaMonitor">
+                            <input type="checkbox" id="precisaMonitor" name="precisaMonitor" value="1">
+                            O aluno precisa de monitor
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="historico">Histórico do Aluno</label>
+                        <textarea id="historico" name="historico" rows="2" placeholder="Histórico do aluno será carregado automaticamente" readonly></textarea>
+                    </div>
+                    
+                    <hr style="margin: 20px 0; border: 1px solid #ddd;">
+                    <h3 style="margin-bottom: 15px; color: #333;">PEI Adaptação (Criado pelo Professor)</h3>
+                    
+                    <div class="form-group" id="ementa-adaptacao-group" style="display: none;">
+                        <label for="ementaAdaptacao">Ementa do Componente Curricular</label>
+                        <textarea id="ementaAdaptacao" name="ementaAdaptacao" rows="3" readonly placeholder="Ementa será preenchida automaticamente ao selecionar a matéria"></textarea>
+                    </div>
+                    
+                    <div class="form-group" id="specificObjectives-group" style="display: none;">
+                        <label for="specificObjectives">Objetivos Específicos *</label>
+                        <textarea id="specificObjectives" name="specificObjectives" rows="3" placeholder="Objetivos específicos da adaptação criada pelo professor"></textarea>
+                    </div>
+                    
+                    <div class="form-group" id="methodology-group" style="display: none;">
+                        <label for="methodology">Metodologia *</label>
+                        <textarea id="methodology" name="methodology" rows="3" placeholder="Metodologia que o professor vai usar"></textarea>
+                    </div>
+                    
+                    <div class="form-group" id="evaluation-group" style="display: none;">
+                        <label for="evaluation">Avaliação *</label>
+                        <textarea id="evaluation" name="evaluation" rows="3" placeholder="Avaliação proposta pelo professor"></textarea>
+                    </div>
+                    
+                    <div class="form-group" id="opinion-group" style="display: none;">
+                        <label for="opinion">Parecer do Professor *</label>
+                        <textarea id="opinion" name="opinion" rows="3" placeholder="Parecer do professor sobre a adaptação"></textarea>
+                    </div>
+                    
+                    <div class="form-group" id="napne-comments-section" style="display: none;">
+                        <label for="napne-comments-display">Comentários do NAPNE</label>
+                        <div id="napne-comments-display" style="padding: 10px; background-color: #f5f5f5; border-radius: 4px; min-height: 60px; white-space: pre-wrap;">
+                            Nenhum comentário do NAPNE ainda.
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelPei">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="savePei">Salvar PEI</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="napneCommentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="napneCommentModalTitle">Comentar PEI Adaptação</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="detail-section">
+                    <h3>Informações do PEI Adaptação</h3>
+                    <div class="detail-row">
+                        <strong>Estudante:</strong> <span id="comment-student"></span>
+                    </div>
+                    <div class="detail-row">
+                        <strong>Componente Curricular:</strong> <span id="comment-subject"></span>
+                    </div>
+                    <div class="detail-row">
+                        <strong>Professor:</strong> <span id="comment-teacher"></span>
+                    </div>
+                    <div class="detail-row">
+                        <strong>Status:</strong> <span id="comment-status"></span>
+                    </div>
+                </div>
+
+                <form id="napneCommentForm">
+                    <input type="hidden" id="comment-pei-adaptacao-id">
+                    
+                    <div class="form-group">
+                        <label for="napne-comment">Comentário do NAPNE *</label>
+                        <textarea id="napne-comment" rows="6" required placeholder="Digite seu comentário sobre este PEI Adaptação para o professor..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="napne-status">Alterar Status</label>
+                        <select id="napne-status">
+                            <option value="">Manter status atual</option>
+                            <option value="em_avaliacao">Em Avaliação</option>
+                            <option value="aprovado">Aprovado</option>
+                            <option value="rejeitado">Rejeitado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelComment">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Comentário</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Sistema NAPNE &copy; 2025 - Desenvolvido para inclusão educacional</p>
+        </div>
+    </footer>
+    <script src="js/api-config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.11.1/html2pdf.bundle.min.js" integrity="sha512-BAkwy1Tc+ylynRQAhJUgneo839I5XlmkLI1z65tvcPY34JvAcupl25c6PnQA71A66XYxO8axwCb0FAefxPo0nQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/peis.js" defer></script>
+</body>
+</html>
+</html>

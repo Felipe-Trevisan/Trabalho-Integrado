@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Senha</title>
+    <link rel="stylesheet" href="css/modern-base.css">
+</head>
+<body>
+    <div style="max-width: 400px; margin: 50px auto; padding: 30px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2>Alterar Senha</h2>
+        
+        <div id="message"></div>
+        
+        <form id="passwordForm">
+            <div style="margin-bottom: 15px;">
+                <label>Senha Atual:</label>
+                <input type="password" id="senhaAtual" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label>Nova Senha:</label>
+                <input type="password" id="novaSenha" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <button type="submit" style="width: 100%; padding: 12px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Alterar Senha
+            </button>
+        </form>
+        
+        <br>
+        <a href="dashboard.html" style="display: block; text-align: center; color: #666;">Voltar ao Dashboard</a>
+    </div>
+
+    <script src="js/api-config.js"></script>
+    <script>
+        document.getElementById('passwordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const senhaAtual = document.getElementById('senhaAtual').value;
+            const novaSenha = document.getElementById('novaSenha').value;
+            
+            try {
+                const response = await fetch(`${API_CONFIG.baseURL}/auth/alterar-senha`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+                        siape: currentUser.siape,
+                        senhaAtual: senhaAtual,
+                        novaSenha: novaSenha
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('message').innerHTML = '<div style="color: green; padding: 10px; background: #d4edda; border-radius: 5px; margin-bottom: 15px;">Senha alterada com sucesso!</div>';
+                    document.getElementById('passwordForm').reset();
+                } else {
+                    document.getElementById('message').innerHTML = '<div style="color: red; padding: 10px; background: #f8d7da; border-radius: 5px; margin-bottom: 15px;">' + (result.message || 'Erro ao alterar senha') + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('message').innerHTML = '<div style="color: red; padding: 10px; background: #f8d7da; border-radius: 5px; margin-bottom: 15px;">Erro de conexão</div>';
+            }
+        });
+    </script>
+</body>
+</html>

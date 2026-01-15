@@ -1,0 +1,487 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #3498db;
+    --secondary: #2c3e50;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #34495e;
+    --disabled: #bdc3c7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--success) 0%, #219653 100%);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.logo i {
+    font-size: 1.8rem;
+}
+
+.user-info {
+    color: white;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Main content */
+main {
+    flex: 1;
+    padding: 2rem 0;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.welcome-section h1 {
+    font-size: 2.5rem;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+}
+
+.welcome-section p {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+
+/* Student info */
+.student-info {
+    margin-bottom: 2rem;
+}
+
+.student-info h2 {
+    margin-bottom: 1rem;
+    color: var(--secondary);
+    text-align: center;
+}
+
+.info-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.info-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item strong {
+    color: var(--dark);
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.info-item span {
+    font-size: 1.1rem;
+    color: var(--secondary);
+}
+
+/* PEIs section */
+.student-peis {
+    margin-bottom: 2rem;
+}
+
+.student-peis h2 {
+    margin-bottom: 1rem;
+    color: var(--secondary);
+    text-align: center;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: #7f8c8d;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    color: var(--success);
+    border-bottom: 3px solid var(--success);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* PEIs list */
+.peis-list {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pei-item {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.pei-item:last-child {
+    border-bottom: none;
+}
+
+.pei-info h3 {
+    color: var(--secondary);
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.pei-info p {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.pei-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-view {
+    background: var(--success);
+    color: white;
+}
+
+.btn-view:hover {
+    background: #219653;
+}
+
+.empty-message {
+    text-align: center;
+    color: #7f8c8d;
+    padding: 2rem;
+    font-style: italic;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: modalopen 0.3s;
+}
+
+@keyframes modalopen {
+    from {opacity: 0; transform: translateY(-50px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background: var(--success);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #eee;
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* PEI details */
+.pei-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-section {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-section:last-child {
+    border-bottom: none;
+}
+
+.detail-section h3 {
+    color: var(--secondary);
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.detail-row {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-row strong {
+    color: var(--dark);
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.detail-row p {
+    line-height: 1.6;
+    color: #555;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 4px solid var(--success);
+}
+
+/* Footer */
+footer {
+    background: var(--secondary);
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .user-info {
+        order: 3;
+        margin: 10px 0;
+    }
+    
+    nav ul {
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .welcome-section h1 {
+        font-size: 2rem;
+    }
+    
+    .info-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-item {
+        flex-direction: column;
+    }
+    
+    .info-item strong {
+        min-width: auto;
+        margin-bottom: 5px;
+    }
+    
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .tab-btn {
+        width: 100%;
+        text-align: center;
+        margin: 5px 0;
+    }
+    
+    .pei-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .pei-actions {
+        align-self: stretch;
+        justify-content: center;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .detail-row {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.3rem;
+    }
+    
+    .logo i {
+        font-size: 1.5rem;
+    }
+    
+    .welcome-section h1 {
+        font-size: 1.8rem;
+    }
+    
+    .welcome-section p {
+        font-size: 1rem;
+    }
+    
+    .info-item strong {
+        font-size: 0.9rem;
+    }
+    
+    .info-item span {
+        font-size: 1rem;
+    }
+    
+    .pei-info h3 {
+        font-size: 1.1rem;
+    }
+    
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    .detail-section h3 {
+        font-size: 1.1rem;
+    }
+}
