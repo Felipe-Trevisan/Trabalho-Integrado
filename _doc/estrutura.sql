@@ -152,3 +152,20 @@ CREATE TABLE `RESP_ESTUDANTE` (
   FOREIGN KEY (`id_aluno`) REFERENCES `ESTUDANTES`(`id_aluno`)
 );
 
+INSERT INTO SERVIDORES (siape, cpf, nome, email, telefone, tipo)
+VALUES (
+  1234567,
+  '12345678901',
+  'Usuário NAPNE',
+  'napne@ifrs.edu.br',
+  '(54) 99999-9999',
+  'NAPNE'
+);
+
+INSERT INTO USUARIOS (siape, username, senha)
+VALUES (
+  1234567,
+  'napne',
+  'napne123'
+);
+
